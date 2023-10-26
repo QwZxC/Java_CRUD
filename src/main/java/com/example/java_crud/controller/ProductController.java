@@ -1,6 +1,6 @@
 package com.example.java_crud.controller;
 
-import com.example.java_crud.dto.ProductDTO;
+import com.example.java_crud.dto.ProductDto;
 import com.example.java_crud.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,17 +16,22 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> get(){
+    public ResponseEntity<List<ProductDto>> get(){
         return ResponseEntity.ok(productService.getProducts());
     }
 
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryId(@PathVariable Long categoryId){
+        return ResponseEntity.ok(productService.getProductsByCategoryId(categoryId));
+    }
+
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO dto){
+    public ResponseEntity<ProductDto> create(@RequestBody ProductDto dto){
         return ResponseEntity.ok(productService.create(dto));
     }
 
     @PutMapping
-    public ResponseEntity<ProductDTO> update(@RequestBody ProductDTO dto){
+    public ResponseEntity<ProductDto> update(@RequestBody ProductDto dto){
         return ResponseEntity.ok(productService.update(dto));
     }
 
