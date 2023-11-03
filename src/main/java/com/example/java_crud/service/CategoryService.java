@@ -29,4 +29,8 @@ public class CategoryService {
         dto.setId(category.getId());
         return dto;
     }
+
+    public CategoryDto getCategoryByName(String name){
+        return mapper.map(repository.findByName(name).orElseThrow(), CategoryDto.class);
+    }
 }

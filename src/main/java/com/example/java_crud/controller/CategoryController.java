@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/categories")
 @RequiredArgsConstructor
@@ -15,8 +13,12 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAllCategories(){
-        return ResponseEntity.ok(service.getCategories());
+    public ResponseEntity<?> getAllCategories(@RequestParam(required = false, defaultValue = "") String name){
+        name = name.trim();
+        if (!name.isEmpty()){
+            return ResponseEntity.ok(service.getCategoryByName(name));
+        }
+            return ResponseEntity.ok(service.getCategories());
     }
 
     @PostMapping
